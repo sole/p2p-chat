@@ -14,22 +14,43 @@ window.addEventListener('DOMContentLoaded', function() {
 		return;
 	}
 
-	setNickname('user' + Math.floor(Math.random() * 100));
+	setNickname('user' + Math.floor(Math.random() * 100))
+		.then(result => {
+			log('updated');
+			setupEventListeners();
+			enableScanning();
+		});
 
-	p2pMan.setScanEnabled(true)
-	.then(result => {
-		if(!result) {
-			throw(new Error('wifiP2P non workee'));
-		}
-		return p2pMan.getPeerList();
-	}).then(peers => {
-		console.log(`number of peers around: ${peers.length}`);
-	});
+	function enableScanning() {
+		p2pMan.setScanEnabled(true)
+			.then(result => {
+				if(!result) {
+					throw(new Error('Cannot start scanning'));
+				} else {
+					log('Scanning enabled');
+					p2pMan.addEventListener('peerinfoupdate', onPeerListChanged);
+					refreshPeerList();
+				}
+			});
+	}
+
+	function refreshPeerList() {
+		p2pMan.getPeerList().then(peers => {
+			log(`number of peers around: ${peers.length}`);
+			peers.forEach(p => {
+				log(p.name);
+			});
+		});
+	}
+
+	function onPeerListChanged(e) {
+		refreshPeerList();
+	}
 
 	function setNickname(str) {
 		nickname.value = str;
 		
-		p2pMan.setDeviceName(str)
+		return p2pMan.setDeviceName(str)
 			.then(result => {
 				log(str + ' nickname updated? ' + result);
 			});
@@ -37,5 +58,11 @@ window.addEventListener('DOMContentLoaded', function() {
 
 	function log(string) {
 		txt.innerHTML = txt.innerHTML + '<div>' + string.toString() + '</div>';
+	}
+
+	var setupEventListeners = () => {
+		nickname.addEventListener('blur', e => {
+			setNickname(nickname.value);
+		});
 	}
 });
