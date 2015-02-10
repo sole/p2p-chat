@@ -12,10 +12,15 @@
 	</head>
 	<body>
 		<section>
-			<h1 data-l10n-id="app_title">p2p chat</h1>
-			<label>nick <input type="text" id="nickname" /></label>
-			<p id="message"></p>
+			<header>
+				<h1 data-l10n-id="app_title">p2p chat</h1>
+				<label>nick <input type="text" id="nickname" /></label>
+			</header>
 			<div id="txt"></div>
+			<div id="message_row">
+				<input type="text" id="message" placeholder="type your message here" />
+				<input type="button" value="send" />
+			</div>
 		</section>
 	</body>
 </html>
