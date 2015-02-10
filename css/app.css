@@ -1,0 +1,25 @@
+html, body {
+  margin: 0;
+  padding: 0.5rem;
+}
+
+body {
+  font-size: 1rem;
+  background: #fff;
+}
+
+h1 {
+  margin: 0 0 1rem 0;
+}
+
+p, input {
+  font-size: inherit;
+}
+
+#txt div {
+	background: #eee;
+}
+
+#txt div:nth-child(2n) {
+	background: #ddd;
+}
