@@ -38,7 +38,7 @@ window.addEventListener('DOMContentLoaded', function() {
 		p2pMan.getPeerList().then(peers => {
 			log(`number of peers around: ${peers.length}`);
 			peers.forEach(p => {
-				log(p.name);
+				log(`${p.name} / ${p.connectionStatus} / ${p.address} / ${p.isGroupOwner}`);
 			});
 		});
 	}
