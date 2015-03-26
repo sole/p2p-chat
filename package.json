@@ -1,0 +1,29 @@
+{
+  "name": "p2p-chat",
+  "version": "1.0.0",
+  "description": "An app to chat with other firefox os  phones nearby",
+  "main": "index.js",
+  "dependencies": {
+    "es6-promise": "^2.0.1",
+    "install-to-adb": "git+https://github.com/sole/install-to-adb.git",
+    "node-firefox-launch-app": "^1.1.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/sole/p2p-chat.git"
+  },
+  "keywords": [
+    "chat",
+    "p2p"
+  ],
+  "author": "sole",
+  "license": "Apache 2",
+  "bugs": {
+    "url": "https://github.com/sole/p2p-chat/issues"
+  },
+  "homepage": "https://github.com/sole/p2p-chat"
+}
