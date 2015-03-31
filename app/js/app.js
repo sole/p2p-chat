@@ -4,6 +4,8 @@ window.addEventListener('DOMContentLoaded', function() {
 
 	var nickname = document.getElementById('nickname');
 	var txt = document.getElementById('txt');
+	var loremIpsum = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit';
+	var words = loremIpsum.replace(',', '').split(' ');
 
 	var p2pMan = navigator.mozWifiP2pManager;
 
@@ -29,21 +31,30 @@ window.addEventListener('DOMContentLoaded', function() {
 				} else {
 					log('Scanning enabled');
 					p2pMan.addEventListener('peerinfoupdate', onPeerListChanged);
-					refreshPeerList();
+					refreshPeerList().then(peers => {
+						log(`got me some ${peers.length} peers`);
+						setInterval(() => {
+							var randomIndex = Math.floor(Math.random() * words.length);
+							var randomWord = words[randomIndex];
+							broadcastMessage(randomWord);
+						}, 2000);
+					});
 				}
 			});
 	}
 
 	function refreshPeerList() {
-		p2pMan.getPeerList().then(peers => {
+		return p2pMan.getPeerList().then(peers => {
 			log(`number of peers around: ${peers.length}`);
 			peers.forEach(p => {
 				log(`${p.name} / ${p.connectionStatus} / ${p.address} / ${p.isGroupOwner}`);
 			});
+			return peers;
 		});
 	}
 
 	function onPeerListChanged(e) {
+		log('PEER LIST CHANGED');
 		refreshPeerList();
 	}
 
@@ -64,5 +75,9 @@ window.addEventListener('DOMContentLoaded', function() {
 		nickname.addEventListener('blur', e => {
 			setNickname(nickname.value);
 		});
+	}
+
+	function broadcastMessage(text) {
+		log(`BROADCASTING ${text}`);
 	}
 });
